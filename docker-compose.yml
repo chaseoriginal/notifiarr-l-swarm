@@ -1,0 +1,39 @@
+x-base: &base
+  restart: unless-stopped
+  networks:
+    - notifiarr-l-swarm_default
+
+services:
+  notifiarr:
+    <<: *base
+    image: ${image}
+    container_name: ${CNAME}
+    hostname: ${hostname}
+    environment:
+      - TZ=${TZ:-UTC}
+    volumes:
+      - notifiarr.config:/config
+      - /var/run/utmp:/var/run/utmp
+      - /etc/machine-id:/etc/machine-id
+    ports:
+      - target: 5454
+        published: 5454
+        protocol: tcp
+        mode: host
+    deploy:
+      mode: replicated
+      replicas: 1
+      placement:
+        constraints:
+          - node.labels.deployment.target.notifiarr == true
+      restart_policy:
+        condition: any
+
+volumes:
+  notifiarr.config:
+    name: notifiarr-l-swarm.config
+
+networks:
+  notifiarr-l-swarm_default:
+    external: true
+    name: notifiarr-l-swarm_default
