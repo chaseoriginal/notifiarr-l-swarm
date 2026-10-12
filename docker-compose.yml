@@ -12,7 +12,7 @@ services:
     environment:
       - TZ=${TZ:-UTC}
     volumes:
-      - /var/lib/docker/volumes/notifiarr-l-swarm/config:/config
+      - notifiarr-l-swarm_config:/config
       - /var/run/utmp:/var/run/utmp
       - /etc/machine-id:/etc/machine-id
     ports:
