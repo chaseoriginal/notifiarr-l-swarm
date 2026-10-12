@@ -12,7 +12,7 @@ services:
     environment:
       - TZ=${TZ:-UTC}
     volumes:
-      - notifiarr.config:/config
+      - /var/lib/docker/volumes/notifiarr-l-swarm/config:/config
       - /var/run/utmp:/var/run/utmp
       - /etc/machine-id:/etc/machine-id
     ports:
@@ -28,10 +28,6 @@ services:
           - node.labels.deployment.target.notifiarr == true
       restart_policy:
         condition: any
-
-volumes:
-  notifiarr.config:
-    name: notifiarr-l-swarm.config
 
 networks:
   notifiarr-l-swarm_default:
