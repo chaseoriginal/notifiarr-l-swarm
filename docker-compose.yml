@@ -1,40 +1,37 @@
-x-base: &base
+x-base:
   restart: unless-stopped
-  networks:
-    - default
-
+  networks: &id001
+  - default
 services:
   notifiarr:
-    <<: *base
+    restart: unless-stopped
+    networks: *id001
     image: ${image}
     hostname: ${hostname}
     environment:
-      - PUID=${PUID}
-      - PGID=${PGID}
-      - TZ=${TZ}
+    - PUID=1000
+    - PGID=1000
+    - TZ=America/Chicago
     volumes:
-      - notifiarr-l-swarm_config:/config
+    - notifiarr-l-swarm_config:/config
     ports:
-      - target: 5454
-        published: 5454
-        protocol: tcp
-        mode: host
+    - target: 5454
+      published: 5454
+      protocol: tcp
+      mode: host
     deploy:
       mode: replicated
       replicas: 1
       placement:
         constraints:
-          - node.labels.deployment.target.notifiarr == true
-          - node.hostname==ore-dock-110-1
+        - node.labels.deployment.target.notifiarr == true
+        - node.hostname==ore-dock-110-1
       restart_policy:
         condition: any
         delay: 5s
-
 volumes:
   notifiarr-l-swarm_config:
-    external: true
     name: notifiarr-l-swarm_config
-
 networks:
   default:
     external: true

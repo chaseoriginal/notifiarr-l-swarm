@@ -1,4 +1,4 @@
-# Local environment - real values live in Portainer's stack Env, never in git
+# Real environment values live in Portainer's stack Env, never in Git.
 .env
 .env.local
 *.bak
