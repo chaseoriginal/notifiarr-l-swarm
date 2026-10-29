@@ -1,3 +1,5 @@
+# Local environment - real values live in Portainer's stack Env, never in git
 .env
+.env.local
 *.bak
 *.log
