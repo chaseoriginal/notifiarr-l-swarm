@@ -1,20 +1,19 @@
 x-base: &base
   restart: unless-stopped
   networks:
-    - notifiarr-l-swarm_default
+    - default
 
 services:
   notifiarr:
     <<: *base
     image: ${image}
-    container_name: ${CNAME}
     hostname: ${hostname}
     environment:
-      - TZ=${TZ:-UTC}
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
     volumes:
       - notifiarr-l-swarm_config:/config
-      - /var/run/utmp:/var/run/utmp
-      - /etc/machine-id:/etc/machine-id
     ports:
       - target: 5454
         published: 5454
@@ -26,10 +25,17 @@ services:
       placement:
         constraints:
           - node.labels.deployment.target.notifiarr == true
+          - node.hostname==ore-dock-110-1
       restart_policy:
         condition: any
+        delay: 5s
+
+volumes:
+  notifiarr-l-swarm_config:
+    external: true
+    name: notifiarr-l-swarm_config
 
 networks:
-  notifiarr-l-swarm_default:
+  default:
     external: true
-    name: notifiarr-l-swarm_default
+    name: bridge
