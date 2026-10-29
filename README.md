@@ -8,8 +8,8 @@ deployment and polls this repository for changes.
 | Portainer stack id | 14 |
 | Portainer host | ore-dock-110-1 |
 | Endpoint | - (id -) |
-| Swarm | iymtakl6ibno |
-| Live service | notifiarr-l-swarm_notifiarr |
+| Swarm | True |
+| Live service | svc:notifiarr-l-swarm_notifiarr |
 | Git repo | https://github.com/chaseoriginal/notifiarr-l-swarm |
 | Compose file | `docker-compose.yml` |
 | Auto-update poll | every 900s |
@@ -39,8 +39,8 @@ deployment and polls this repository for changes.
 ## Verifying a deployment
 
 ```bash
-docker service ls --filter name=notifiarr-l-swarm_notifiarr
-docker service inspect notifiarr-l-swarm_notifiarr --format '{{json .Spec.TaskTemplate.ContainerSpec.Mounts}}'
+docker service ls --filter name=svc:notifiarr-l-swarm_notifiarr
+docker service inspect svc:notifiarr-l-swarm_notifiarr --format '{{json .Spec.TaskTemplate.ContainerSpec.Mounts}}'
 ```
 
 A healthy stack shows `1/1` and the same volume names as before.
