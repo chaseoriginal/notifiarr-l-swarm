@@ -56,9 +56,9 @@ Two constraints, both required:
 
 This service attaches to the local `bridge` network, declared `external: true`.
 
-The swarm's default address pool (`192.168.100.0/24`, size 24) provides exactly
-one subnet and it is already consumed. Any service that needs an **overlay**
-network fails to start on this host:
+The swarm's default address pool on ore-dock-110-1 was `192.168.100.0/24` at size 24,
+which yields exactly **one** subnet. Once the host's `docker_gwbridge` held it, any
+service needing an **overlay** network failed to start:
 
 ```
 failed to set up container networking: error creating external connectivity network:
@@ -66,7 +66,11 @@ all predefined address pools have been fully subnetted
 ```
 
 That failure looks like a broken compose file but is host-level pool exhaustion.
-Using the pre-existing `bridge` network avoids allocating a new subnet.
+The pool was widened on 2026-10-29 (`172.18.0.0/16` added, 256 more chunks), and
+overlay stacks now deploy normally on this host.
+
+The `bridge` attachment is kept anyway: it is the shape the live service has always
+run with, and it does not consume an address-pool chunk.
 
 ## Deploy
 
