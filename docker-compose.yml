@@ -6,8 +6,8 @@ services:
   notifiarr:
     restart: unless-stopped
     networks: *id001
-    image: ${image}
-    hostname: ${hostname}
+    image: golift/notifiarr:latest
+    hostname: notifiarr-l
     environment:
     - PUID=1000
     - PGID=1000
