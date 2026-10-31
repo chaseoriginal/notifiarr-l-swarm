@@ -1,11 +1,12 @@
 x-base:
   restart: unless-stopped
-  networks: &id001
+  networks:
   - default
 services:
   notifiarr:
     restart: unless-stopped
-    networks: *id001
+    networks:
+    - default
     image: golift/notifiarr:latest
     hostname: notifiarr-l
     environment:
